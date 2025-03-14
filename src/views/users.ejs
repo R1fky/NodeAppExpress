@@ -1,0 +1,150 @@
+<div class="container">
+
+
+  <h1>User Page</h1>
+  <table class="table">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Username</th>
+        <th scope="col">Nama</th>
+        <th scope="col">Np</th>
+        <th scope="col">Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% datas.forEach((data, index) => { %>
+      <tr>
+        <th scope="row"><%= index +1 %></th>
+        <td><%= data.username %></td>
+        <td><%= data.nama %></td>
+        <td><%= data.np %></td>
+        <td>
+          <button onclick="deleteUser('<%= data.id %>')" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+          <!-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUser"><i class="bi bi-trash-fill"></i></button>   -->
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <!-- modal  -->
+  <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addUserModal">Add User</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formAdduser">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Username</label>
+              <input type="email" class="form-control" id="username" name="username" aria-describedby="emailHelp" placeholder="username@gmail.com"/>
+            </div>
+              <div class="mb-3">
+                <label for="exampleInputName1" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="namExample"/>
+              </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Nomor Hp</label>
+              <input type="tel" class="form-control" id="nomor_hp" name="nomor_hp" pattern="08[0-9]{8,11}" title="Masukkan nomor HP yang valid (08xxxxxxxxx)" placeholder="081212222345"/>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <%- include('layouts/modalUsers') %>
+  <!-- end modal -->
+
+
+  <script>
+    document.getElementById('formAdduser').addEventListener('submit', async function(event) {
+      event.preventDefault()
+
+      //mendaptkan input form
+      const formData = {
+        username : document.getElementById('username').value,
+        name : document.getElementById('name').value,
+        password : document.getElementById('password').value,
+        nomor_hp : document.getElementById('nomor_hp').value
+      }
+
+      try {
+        const response = await fetch('/users/createuser', {
+          method : 'POST',
+          headers : {
+            "Content-Type" : "application/json",
+          },
+          body : JSON.stringify(formData)
+        })
+
+        const result = await response.json()
+        
+        if(result.success) {
+          Swal.fire({
+            title: "Success",
+            text : result.message,
+            icon : "success",
+            confirmButtonText : "Ok" 
+          }).then(() => location.reload())
+        } else {
+          Swal.fire({
+            title : "Failed",
+            text: result.message,
+            icon : "error",
+            confirmButtonText : "Try Again"
+          })
+        }
+      } catch (error) {
+        Swal.fire({
+            title: "error",
+            text : result.message,
+            icon : "error",
+            confirmButtonText : "Try Again" 
+          })
+      }
+    })
+
+    async function deleteUser(idUser) {
+      const confirmDelete = await Swal.fire({
+        title : "Apakah anda Yakin ?",
+        text : "Data User akan dihapus!",
+        icon : "warning",
+        showCancelButton : true,
+        confirmButtonText : "Ya, Hapus",
+        cancelButtonText : "Batal"
+      })
+
+      if(confirmDelete.isConfirmed) {
+        try {
+          const response = await fetch(`/users/delete/${idUser}`, {
+            method: "DELETE"
+          })
+
+          const result = await response.json()
+
+          if(result.success) {
+            Swal.fire('Delete Data Berhasil', result.message, "success")
+            .then(() => location.reload()) // reload halaman setelah delete success
+          } else {
+            Swal.fire("Delet Data Gagal", result.message, "error")
+          }
+        } catch (error) {
+          Swal.fire('Gagal', "Terjadi Kesalahan pada server", "error")
+        }
+      }
+  }
+  </script>
+</div>
