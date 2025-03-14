@@ -4,6 +4,8 @@ require("dotenv").config();
 const app = express();
 const path = require("path");
 
+//use public
+app.use(express.static("src/public"));
 const middlewareLogRequest = require("./src/middleware/logReq");
 
 //template engine
@@ -26,7 +28,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", indexRoute);
 //users routes
 app.use("/users", userRoute);
-
 
 app.listen(port, () => {
   console.log(`Server runing http://localhost:${port}`);
