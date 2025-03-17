@@ -1,13 +1,86 @@
-<style>
+<!-- <style>
   .navbar {
     transition: background-color 0.4s ease-in-out;
   }
   .navbar.scrolled {
     background-color: rgba(0, 0, 0, 0.7) !important;
   }
-</style>
+</style> -->
 
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+<nav class="bg-white shadow-md p-4 fixed w-full z-10">
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="#" class="text-2xl font-bold text-blue-600">Rumah Impian</a>
+
+    <!-- Menu utama -->
+    <ul class="hidden md:flex space-x-6 items-center">
+      <li><a href="/" class="text-gray-700 hover:text-blue-600 text-lg">Home</a></li>
+      <li><a href="/users/" class="text-gray-700 hover:text-blue-600 text-lg">Customer</a></li>
+      <li><a href="/about" class="text-gray-700 hover:text-blue-600 text-lg">About</a></li>
+      <li><a href="/contact" class="text-gray-700 hover:text-blue-600 text-lg">Contact</a></li>
+      <li><a href="/login" class="text-gray-700 hover:text-blue-600 text-lg">Login</a></li>
+      <li>
+        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-lg leading-normal" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+      </li>
+    </ul>
+
+    <!-- Tombol Hamburger Menu -->
+    <button id="menu-toggle" class="md:hidden text-gray-700 text-2xl">&#9776;</button>
+  </div>
+
+  <!-- Menu responsif (Mobile) -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+    <ul class="flex flex-col space-y-4 p-4">
+      <li><a href="/" class="text-gray-700 hover:text-blue-600">Home</a></li>
+      <li><a href="/users/" class="text-gray-700 hover:text-blue-600">Customer</a></li>
+      <li><a href="/about" class="text-gray-700 hover:text-blue-600">About</a></li>
+      <li><a href="/contact" class="text-gray-700 hover:text-blue-600">Contact</a></li>
+      <li><a href="/login" class="text-gray-700 hover:text-blue-600">Login</a></li>
+      <li>
+        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-lg leading-normal" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Modal Register -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg rounded-4 border-0">
+      <div class="modal-header bg-gradient text-white rounded-top-4" style="background: linear-gradient(135deg, #007bff, #6610f2)">
+        <h5 class="modal-title fw-bold" id="registerModalLabel">Create an Account</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form>
+          <div class="mb-3">
+            <label for="registerUsername" class="form-label fw-semibold">Username</label>
+            <input type="text" class="form-control rounded-3" id="registerUsername" placeholder="Enter username" />
+          </div>
+          <div class="mb-3">
+            <label for="registerEmail" class="form-label fw-semibold">Email</label>
+            <input type="email" class="form-control rounded-3" id="registerEmail" placeholder="Enter email" />
+          </div>
+          <div class="mb-3">
+            <label for="registerPassword" class="form-label fw-semibold">Password</label>
+            <input type="password" class="form-control rounded-3" id="registerPassword" placeholder="Enter password" />
+          </div>
+          <button type="submit" class="btn btn-primary w-100 fw-bold py-2 rounded-3 mt-3 shadow-sm" style="background: linear-gradient(135deg, #007bff, #6610f2); border: none; transition: 0.3s">Register</button>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <p class="text-muted mb-0">Already have an account? <a href="#" class="text-primary fw-semibold">Login</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("menu-toggle").addEventListener("click", function () {
+    document.getElementById("mobile-menu").classList.toggle("hidden");
+  });
+</script>
+
+<!-- <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
   <div class="container">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -22,19 +95,14 @@
       </ul>
     </div>
   </div>
-</nav>
-
-<div style="padding-top: 100px;">
-  <h1 class="text-center mt-5">Scroll Down to See Effect</h1>
-</div>
-
-<script>
-  window.addEventListener('scroll', function() {
-    let navbar = document.querySelector('.navbar');
+</nav> -->
+<!-- <script>
+  window.addEventListener("scroll", function () {
+    let navbar = document.querySelector(".navbar");
     if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
+      navbar.classList.add("scrolled");
     } else {
-      navbar.classList.remove('scrolled');
+      navbar.classList.remove("scrolled");
     }
   });
-</script>
+</script> -->

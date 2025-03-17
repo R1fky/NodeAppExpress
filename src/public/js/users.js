@@ -45,6 +45,7 @@ document.getElementById("formAdduser").addEventListener("submit", async function
   }
 });
 
+//fetch api deleteUser
 async function deleteUser(idUser) {
   const confirmDelete = await Swal.fire({
     title: "Apakah anda Yakin ?",
@@ -73,3 +74,9 @@ async function deleteUser(idUser) {
     }
   }
 }
+
+// fetch api updateUser
+
+
+
+

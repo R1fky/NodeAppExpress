@@ -1,19 +1,52 @@
-<!-- Modal Delete -->
-<div class="modal fade" id="deleteUser" tabindex="-1" aria-labelledby="deleteUser" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger">Delete</button>
+<!-- Modal Update -->
+<% datas.forEach(data=> { %>
+  <div class="modal fade" id="updateUser<%= data.id %>" tabindex="-1" aria-labelledby="updateUser" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"><%= data.username %></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="updateUser<%= data.id %>">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Username</label>
+              <input type="email" class="form-control" id="username" name="username" value="<%= data.username %>" aria-describedby="emailHelp" placeholder="username@gmail.com"/>
+            </div>
+              <div class="mb-3">
+                <label for="exampleInputName1" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="<%= data.nama %>" aria-describedby="nama" placeholder="namExample"/>
+              </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password<%= data.id %>" name="password" placeholder="Kosongkan jika tidak ingin mengubah password"/>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Nomor Hp</label>
+              <input type="tel" class="form-control" id="nomor_hp" name="nomor_hp" pattern="08[0-9]{8,11}" title="Masukkan nomor HP yang valid (08xxxxxxxxx)" value="<%= data.np %>" placeholder="081212222345" />
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-warning"><i class="bi bi-floppy"></i></button>
+        </div>
+      </form>
       </div>
     </div>
+
+    <script>
+      document.getElementById('updateUser<%= data.id %>').addEventListener('submit', async function (event) {
+        event.preventDefault()
+
+        const formDataUpdate = {
+          username : document.getElementById('username').value,
+          name : document.getElementById("name").value,
+          nomor_hp : document.getElementById("nomor_hp").value
+        }
+        
+        console.log(formDataUpdate)
+      })
+    </script>
   </div>
-</div>
-<!-- End Modal Delete -->
+<% }) %>
+<!-- End Modal Update -->

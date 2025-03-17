@@ -1,6 +1,4 @@
 <div class="container">
-
-
   <h1>User Page</h1>
   <table class="table">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
@@ -22,6 +20,7 @@
         <td><%= data.np %></td>
         <td>
           <button onclick="deleteUser('<%= data.id %>')" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+          <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateUser<%= data.id %>"><i class="bi bi-pencil-square"></i></button>
           <!-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUser"><i class="bi bi-trash-fill"></i></button>   -->
         </td>
       </tr>
