@@ -15,10 +15,7 @@ router.delete("/delete/:idUser", UserController.deleteUser);
 //update users
 router.patch("/:id", UserController.updateUsers);
 
-router.post("/", (req, res) => {
-  res.json({
-    message: "Add Data User Success",
-  });
-});
+//registrasi users
+router.post('/regisUser', UserController.regisUser)
 
 module.exports = router;

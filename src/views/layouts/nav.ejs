@@ -51,18 +51,18 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-4">
-        <form>
+        <form id="registerUser">
           <div class="mb-3">
             <label for="registerUsername" class="form-label fw-semibold">Username</label>
-            <input type="text" class="form-control rounded-3" id="registerUsername" placeholder="Enter username" />
+            <input type="text" class="form-control rounded-3" id="registerUsername" name="username" placeholder="Enter username" />
           </div>
           <div class="mb-3">
             <label for="registerEmail" class="form-label fw-semibold">Email</label>
-            <input type="email" class="form-control rounded-3" id="registerEmail" placeholder="Enter email" />
+            <input type="email" class="form-control rounded-3" id="registerEmail" name="email" placeholder="Enter email" />
           </div>
           <div class="mb-3">
             <label for="registerPassword" class="form-label fw-semibold">Password</label>
-            <input type="password" class="form-control rounded-3" id="registerPassword" placeholder="Enter password" />
+            <input type="password" class="form-control rounded-3" id="registerPassword" name="password" placeholder="Enter password" />
           </div>
           <button type="submit" class="btn btn-primary w-100 fw-bold py-2 rounded-3 mt-3 shadow-sm" style="background: linear-gradient(135deg, #007bff, #6610f2); border: none; transition: 0.3s">Register</button>
         </form>
@@ -78,31 +78,61 @@
   document.getElementById("menu-toggle").addEventListener("click", function () {
     document.getElementById("mobile-menu").classList.toggle("hidden");
   });
-</script>
 
-<!-- <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
-  <div class="container">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/users/">Users</a></li>
-        <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
-      </ul>
-    </div>
-  </div>
-</nav> -->
-<!-- <script>
-  window.addEventListener("scroll", function () {
-    let navbar = document.querySelector(".navbar");
-    if (window.scrollY > 50) {
-      navbar.classList.add("scrolled");
-    } else {
-      navbar.classList.remove("scrolled");
+  document.getElementById("registerUser").addEventListener("submit", async function (event) {
+    event.preventDefault(); // Mencegah reload halaman
+
+    // Mengambil data dari form
+    const form = event.target;
+    const formDataRegis = {
+      username: document.getElementById("registerUsername").value.trim(),
+      email: document.getElementById("registerEmail").value.trim(),
+      password: document.getElementById("registerPassword").value,
+    };
+
+    try {
+      const response = await fetch("/users/regisUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formDataRegis),
+      });
+
+      // Mengecek apakah request sukses (status 200-299)
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      // Menampilkan SweetAlert jika registrasi sukses
+      Swal.fire({
+        title: "Success",
+        text: result.message || "User registered successfully!",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then(() => {
+        // Reset form setelah sukses
+        form.reset();
+
+        // Tutup modal register menggunakan Bootstrap API
+        const registerModal = bootstrap.Modal.getInstance(document.getElementById("registerModal"));
+        registerModal.hide();
+
+        // Refresh halaman untuk update data (opsional)
+        location.reload();
+      });
+    } catch (error) {
+      console.error("Registration Error:", error);
+
+      // Menampilkan SweetAlert jika terjadi error
+      Swal.fire({
+        title: "Error",
+        text: "Registration failed! Please try again.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
     }
   });
-</script> -->
+</script>

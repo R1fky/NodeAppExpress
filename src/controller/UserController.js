@@ -11,7 +11,7 @@ exports.getAllUsers = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Server Error",
-      error: error.message, // Pastikan hanya mengirim error message untuk keamanan
+      error: error.message, //mengirim error message untuk keamanan
     });
   }
 };
@@ -20,7 +20,6 @@ exports.insertUser = async (req, res) => {
   const { body } = req;
   try {
     await userModel.createUser(body);
-    console.log(body);
     res.status(200).json({
       success: true,
       message: "Create New User Success",
@@ -64,14 +63,32 @@ exports.deleteUser = async (req, res) => {
   try {
     await userModel.deleteUser(idUser);
     res.status(200).json({
-      success : true, 
+      success: true,
       message: "Delete Data Success",
     });
   } catch (error) {
     res.status(500).json({
-      success : false, 
+      success: false,
       message: "Delete Data Failed",
-      ErrorMessage : error
-    })
+      ErrorMessage: error,
+    });
+  }
+};
+
+//regisUser
+exports.regisUser = async (req, res) => {
+  const { body } = req;
+
+  try {
+    await userModel.regisUser(body);
+    res.status(201).json({
+      success: true,
+      message: "Register User Success",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Data tidak Diterima",
+    });
   }
 };
